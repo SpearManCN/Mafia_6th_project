@@ -9,4 +9,8 @@ public class HomeController {
     public String home(){
         return "home";
     }
+    @RequestMapping("/ranking")
+    public String ranking(){
+        return "ranking";
+    }
 }

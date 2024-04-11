@@ -16,12 +16,12 @@
     align-items: center;  background-color: grey; width:100%; height:300px; font-size:50px; font-family: Arial">
     Mafia Game
 </div>
-<div style="height:80px; width:100%; font-size:20px; font-family: Arial">
-    <span style="width:30%;">게임 찾기</span>
-    <span style="width:30%;">&nbsp;</span>
-    <span style="width:30%;">랭킹</span>
-    <span style="width:30%;">&nbsp;</span>
-    <span style="width:30%;">게시판</span>
+<div style="text-align:center; align:center; height:80px; width:100%; font-size:20px; font-family: Arial">
+    <span style="display: inline-block; width:15%; background-color: grey">게임 찾기</span>
+    <span style="display: inline-block; width:15%;align:center;">&nbsp;</span>
+    <span style="display: inline-block; width:15%;align:center;">랭킹</span>
+    <span style="display: inline-block; width:15%;align:center;">&nbsp;</span>
+    <span style="display: inline-block; width:15%;align:center;">게시판</span>
 </div>
 
 </body>
