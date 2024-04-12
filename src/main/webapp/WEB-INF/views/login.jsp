@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Mafia</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         #div1{
             display: flex;
             text-align: center;
             justify-content: center; /* 가로 방향 가운데 정렬 */
             align-items: center;
-            /*flex-direction: column;*/
-            /*display: inline-block; text-align: center; vertical-align: middle;*/
             background-color: grey;
         }
         #div2{
@@ -22,13 +21,10 @@
             align-items: center;
             width:700px;
             flex-wrap: wrap;
-            /*flex-wrap: wrap;*/
             height:400px;
             font-size: 35px;
         }
         #inputId{
-            /*width:300px;*/
-            /*height:40px;*/
             font-size: 35px;
         }
         #inputPw{
@@ -45,7 +41,6 @@
             $("#joinBt").click(function(){goJoin()});
             $("#kakaoBt").click(function(){goKakao()});
             $("#discord").click(function(){goDiscord()});
-
         });
         function goJoin(){
             window.location.href = "/login_join";
@@ -61,6 +56,10 @@
             var pw = $("#inputPw").val();
             if(id.length==0||pw.length==0){
                 alert("ID 혹은 PW를 다시 확인해주세요");
+            }else{
+                //ajax로 form 넘겨서 id 확인 해줘야함.
+
+                alert("로그인 성공!");
             }
         }
         function goFind(){

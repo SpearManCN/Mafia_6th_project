@@ -29,4 +29,8 @@ public class HomeController {
     public String board(){
         return "board";
     }
+    @RequestMapping("/findPw")
+    public String findPw(){
+        return "findPw";
+    }
 }
