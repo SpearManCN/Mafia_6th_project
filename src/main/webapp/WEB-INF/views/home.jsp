@@ -4,24 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Mafia</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function (){
+            $("#loginBar").click(function(){
+                goLogin();
+            });
+            $("#title1").click(function(){
+                goTitle(1);
+            });
+            $("#title2").click(function(){
+                goTitle(2);
+            });
+            $("#title3").click(function(){
+                goTitle(3);
+            });
+        });
+
+        function goLogin(){
+            window.location.href = "/login";
+        }
+        function goTitle(n){
+            if(n==1){
+                window.location.href = "/game";
+            }else if(n==2){
+                window.location.href = "/ranking";
+            }else{
+                window.location.href = "/board";
+            }
+
+        }
+
+
+    </script>
+    <style>
+        #loginBar{
+            height:50px;
+            width:100px;
+            cursor:pointer;
+            font-size:20px;
+        }
+        #Mafia{
+            display: flex; font-size:40px;
+            justify-content: center;
+            align-items: center;
+            background-color: grey;
+            width:100%; height:300px;
+            font-size:50px;
+            font-family: Arial
+        }
+        #titleDiv{
+            text-align:center;
+            align:center;
+            height:80px;
+            width:100%;
+            font-size:35px;
+            font-family: Arial
+        }
+        .titles{
+            display: inline-block;
+            width:15%;
+            align:center;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
 <div align="right" style="height:50px;">
-    <span style="height:50px; width:100px; cursor:pointer; font-size:20px;" onclick="alert('asdf')">로그인</span>
-    <span style="height:50px; width:100px; cursor:pointer; font-size:20px;" onclick="alert('asdf')">카카오로그인</span>
-    <span style="height:50px; width:100px; cursor:pointer; font-size:20px;" onclick="alert('asdf')">디스코드로그인</span>
+    <span id ="loginBar" >로그인</span>
 </div>
-<div style="display: flex; font-size:40px;
-    justify-content: center; /* 가로 가운데 정렬 */
-    align-items: center;  background-color: grey; width:100%; height:300px; font-size:50px; font-family: Arial">
+<div id="Mafia">
     Mafia Game
 </div>
-<div style="text-align:center; align:center; height:80px; width:100%; font-size:20px; font-family: Arial">
-    <span style="display: inline-block; width:15%; background-color: grey">게임 찾기</span>
-    <span style="display: inline-block; width:15%;align:center;">&nbsp;</span>
-    <span style="display: inline-block; width:15%;align:center;">랭킹</span>
-    <span style="display: inline-block; width:15%;align:center;">&nbsp;</span>
-    <span style="display: inline-block; width:15%;align:center;">게시판</span>
+<div id="titleDiv">
+    <span class="titles" id="title1">게임 찾기</span>
+    <span class="titles" >&nbsp;</span>
+    <span class="titles" id="title2">랭킹</span>
+    <span class="titles" >&nbsp;</span>
+    <span class="titles" id="title3">게시판</span>
 </div>
 
 </body>

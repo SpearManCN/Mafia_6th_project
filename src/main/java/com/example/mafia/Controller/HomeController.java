@@ -13,4 +13,20 @@ public class HomeController {
     public String ranking(){
         return "ranking";
     }
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+    @RequestMapping("/login_join")
+    public String login_join(){
+        return "login_join";
+    }
+    @RequestMapping("/game")
+    public String game(){
+        return "game";
+    }
+    @RequestMapping("/board")
+    public String board(){
+        return "board";
+    }
 }
