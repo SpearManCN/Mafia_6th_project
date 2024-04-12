@@ -10,8 +10,6 @@
             text-align: center;
             justify-content: center; /* 가로 방향 가운데 정렬 */
             align-items: center;
-            /*flex-direction: column;*/
-            /*display: inline-block; text-align: center; vertical-align: middle;*/
             background-color: grey;
         }
         #div2{
@@ -22,16 +20,10 @@
             align-items: center;
             width:700px;
             flex-wrap: wrap;
-            /*flex-wrap: wrap;*/
             height:400px;
             font-size: 35px;
         }
-        #inputId{
-            /*width:300px;*/
-            /*height:40px;*/
-            font-size: 35px;
-        }
-        #inputPw{
+        #inputPw, #inputNick, #inputPw2, #inputId{
             font-size: 35px;
         }
         .bt{
@@ -40,26 +32,25 @@
     </style>
     <script>
         $(function(){
-            $("#loginBt").click(function(){val()});
-            $("#findBt").click(function(){goFind()});
-            $("#joinBt").click(function(){goJoin()});
-            $("#kakaoBt").click(function(){goKakao()});
-            $("#discord").click(function(){goDiscord()});
+            $("#joinBt").click(function(){val()});
         });
         function goJoin(){
-            window.location.href = "/login_join";
-        }
-        function goKakao(){
-            alert("카카오 로그인");
-        }
-        function goDiscord(){
-            alert("디코 로그인");
+            // ajax로 가입.
         }
         function val(){
-
-        }
-        function goFind(){
-            window.location.href = "/findPw";
+            var id = $("#inputId").val();
+            var pw = $("#inputPw").val();
+            var pw2 = $("#inputPw2").val();
+            var nick = $("#inputNick").val();
+            if(id.length==0||pw.length==0||pw2.length==0||nick.length==0){
+                alert("모든 칸을 채워주세요");
+                return;
+            }
+            if(pw!=pw2){
+                alert("pw와 pw확인이 다릅니다");
+                return;
+            }
+            goJoin();
         }
     </script>
 </head>
@@ -67,24 +58,22 @@
 <%@ include file="home.jsp" %>
 <div id="div1">
     <div id="div2">
+        <form name="joinForm">
         <div>
-            id <input type="text" placeholder="ID를 입력해주세요" id="inputId">
+            id <input name="id" type="text" placeholder="ID를 입력해주세요" id="inputId">
         </div>
         <div>
-
+            pw <input name="pw" type="password" placeholder="PW를 입력해주세요" id="inputPw">
         </div>
         <div>
-            pw <input type="password" placeholder="PW를 입력해주세요" id="inputPw">
+            pw확인 <input type="password" placeholder="PW를 재 입력해주세요" id="inputPw2">
         </div>
         <div>
-            <button class="bt" id="loginBt">로그인</button>
-            <button class="bt" id="findBt">비밀번호 찾기</button>
+            닉네임 <input name="nick" type="password" placeholder="PW를 입력해주세요" id="inputNick">
         </div>
-
+        </form>
         <div>
-            <button class="bt" id="joinBt">회원가입</button> &ensp;&ensp;
-            <button class="bt" id="kakaoBt">kakao</button> &ensp;&ensp;
-            <button class="bt" id="discord">discord</button>
+            <button class="bt" id="joinBt">가입하기</button>
         </div>
     </div>
 </div>
