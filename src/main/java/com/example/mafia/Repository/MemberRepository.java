@@ -46,14 +46,20 @@ public class MemberRepository {
         return result;
     }
 
-    public int updatePw(Member input, String pw){
-        input.setPw(pw);
+    public int updatePw(Member input){
         int result = sqlSession.update("updatePw", input);
         return result;
     }
 
     public List<Member> getRanking(){
-        List<Member> result =
+        List<Member> result = sqlSession.selectList("getRanking");
+        return result;
+    }
+
+    public int getMyRanking(Member member){
+        int result =0;
+        result = sqlSession.selectOne("getMyRanking", member);
+        return result;
     }
 
 
