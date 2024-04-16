@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Mafia</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <style>
         #div1{
             display: flex;
@@ -34,8 +36,31 @@
         $(function(){
             $("#joinBt").click(function(){val()});
         });
+
         function goJoin(){
             // ajax로 가입.
+            $.ajax({
+                url:"joinProc"
+                ,type:"post"
+                ,data:$("[name='joinForm']").serialize()
+                ,success:function(data){
+                    //id 와 nick 중복확인후 id중복시 3, nick중복시 2, 성공적으로 가입시 1
+                    if(data==1){
+                        alert("환영합니다");
+                        window.location.href = "/login";
+                    }else if(data==2){
+                        alert("Nick이 중복됩니다");
+                        return;
+                    }else{
+                        alert("Id가 중복됩니다");
+                        return;
+                    }
+                }
+                ,error:function(){
+                    alert("오류발생");
+                    return;
+                }
+            });
         }
         function val(){
             var id = $("#inputId").val();

@@ -1,4 +1,4 @@
-package com.example.mafia.Domain;
+package mafia.Domain;
 
 import lombok.Data;
 
