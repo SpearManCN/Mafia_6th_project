@@ -10,36 +10,36 @@
         select * from member where nick = #{nick}
     </select>
 
-<!--    <select id="getMemberByPw" parameterType="mafia.Domain.Member" resultType="mafia.Domain.Member">-->
-<!--        select * from member where id = #{id} and pw = #{pw}-->
-<!--    </select>-->
+    <select id="getMemberByPw" parameterType="Member" resultType="Member">
+        select * from member where id = #{id} and pw = #{pw}
+    </select>
 
-<!--    <select id="getMembers" resultType="mafia.Domain.Member">-->
-<!--        select * from member order by score asc;-->
-<!--    </select>-->
+    <select id="getMembers" resultType="Member">
+        select * from member order by score asc;
+    </select>
 
-<!--    <insert id="insertMember" parameterType="mafia.Domain.Member">-->
-<!--        insert into member(id, pw, nick)-->
-<!--        values (#{id},#{pw},#{nick})-->
-<!--    </insert>-->
+    <insert id="insertMember" parameterType="Member">
+        insert into member(id, pw, nick)
+        values (#{id},#{pw},#{nick})
+    </insert>
 
-<!--    <update id="updateWinScore" parameterType="mafia.Domain.Member">-->
-<!--        update member win=win+1, score=score+10 where id=#{id}-->
-<!--    </update>-->
+    <update id="updateWinScore" parameterType="Member">
+        update member win=win+1, score=score+10 where id=#{id}
+    </update>
 
-<!--    <update id="updateLossScore" parameterType="mafia.Domain.Member">-->
-<!--        update member loss=loss+1, score=score-10 where id=#{id}-->
-<!--    </update>-->
+    <update id="updateLossScore" parameterType="Member">
+        update member loss=loss+1, score=score-10 where id=#{id}
+    </update>
 
-<!--    <update id="updatePw">-->
-<!--        update member pw=#{pw} where id=#{id}-->
-<!--    </update>-->
+    <update id="updatePw">
+        update member pw=#{pw} where id=#{id}
+    </update>
 
-<!--    <select id="getRanking" resultType="mafia.Domain.Member">-->
-<!--        select * from member order by score desc limit 10;-->
-<!--    </select>-->
+    <select id="getRanking" resultType="Member">
+        select * from member order by score desc limit 10;
+    </select>
 
-<!--    <select id="getMyRanking" parameterType="mafia.Domain.Member" resultType="Integer">-->
-<!--        select count(*)+1 from member where score>(select score from member where id=#{id})-->
-<!--    </select>-->
+    <select id="getMyRanking" parameterType="Member" resultType="Integer">
+        select count(*)+1 from member where score>(select score from member where id=#{id})
+    </select>
 </mapper>

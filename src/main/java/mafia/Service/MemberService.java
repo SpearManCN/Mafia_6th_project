@@ -28,15 +28,15 @@ public class MemberService {
 
     //로그인 계정확인
     //비번 틀렸으면 0, 성공시 1
-//    public int login(Member member){
-//        int result =0;
-//        if(memberRepository.getMemberByPw(member)==null){
-//            result=0;
-//        }else{
-//            result=1;
-//        }
-//        return result;
-//    }
+    public int login(Member member){
+        int result =0;
+        if(memberRepository.getMemberByPw(member)==null){
+            result=0;
+        }else{
+            result=1;
+        }
+        return result;
+    }
 //
 //    //랭킹보드 가져오기
 //    public List<Member> getRanking(){

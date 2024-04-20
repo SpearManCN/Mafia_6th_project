@@ -9,17 +9,17 @@ import java.util.List;
 public interface MemberMapper {
     public Member getMemberById(Member input);
     public Member getMemberByNick(Member input);
-//    public Member getMemberByPw(Member input);
-//    public List<Member> getMembers();
-//    public int insertMember(Member input);
-//
-//    public int updateWinScore(Member input);
-//
-//    public int updateLossScore(Member input);
-//
-//    public int updatePw(Member input);
-//
-//    public List<Member> getRanking();
-//
-//    public int getMyRanking(Member member);
+    public Member getMemberByPw(Member input);
+    public List<Member> getMembers();
+    public int insertMember(Member input);
+
+    public int updateWinScore(Member input);
+
+    public int updateLossScore(Member input);
+
+    public int updatePw(Member input);
+
+    public List<Member> getRanking();
+
+    public int getMyRanking(Member member);
 }

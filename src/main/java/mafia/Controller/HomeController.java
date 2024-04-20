@@ -19,9 +19,18 @@ public class HomeController {
     public String ranking(){
         return "ranking";
     }
+
+    // 로그인 관련
     @RequestMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @RequestMapping("/loginProc")
+    @ResponseBody
+    public int loginProc(Member member){
+        memberService.
+        return 1;
     }
     @RequestMapping("/login_join")
     public String login_join(){
