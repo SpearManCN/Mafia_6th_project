@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class MemberService {
@@ -26,6 +28,10 @@ public class MemberService {
         return result;
     }
 
+    public int insertMember(Member member){
+        return memberRepository.insertMember(member);
+    }
+
     //로그인 계정확인
     //비번 틀렸으면 0, 성공시 1
     public int login(Member member){
@@ -39,10 +45,10 @@ public class MemberService {
     }
 //
 //    //랭킹보드 가져오기
-//    public List<Member> getRanking(){
-//        List<Member> result = memberRepository.getRanking();
-//        return result;
-//    }
+    public List<Member> getRanking(){
+        List<Member> result = memberRepository.getRanking();
+        return result;
+    }
 //
 //    //내 랭킹 가져오기
 //    public int getMyRanking(Member member){

@@ -58,29 +58,25 @@
                 alert("ID 혹은 PW를 다시 확인해주세요");
             }else{
                 //ajax로 form 넘겨서 id 확인 해줘야함.
-                // $.ajax({
-                //     url:"joinProc"
-                //     ,type:"post"
-                //     ,data:$("[name='joinForm']").serialize()
-                //     ,success:function(data){
-                //         //id 와 nick 중복확인후 id중복시 3, nick중복시 2, 성공적으로 가입시 1
-                //         if(data==1){
-                //             alert("환영합니다");
-                //             window.location.href = "/login";
-                //         }else if(data==2){
-                //             alert("Nick이 중복됩니다");
-                //             return;
-                //         }else{
-                //             alert("Id가 중복됩니다");
-                //             return;
-                //         }
-                //     }
-                //     ,error:function(){
-                //         alert("오류발생");
-                //         return;
-                //     }
-                // });
-                alert("로그인 성공!");
+                $.ajax({
+                    url:"loginProc"
+                    ,type:"post"
+                    ,data:$("[name='loginForm']").serialize()
+                    ,success:function(data){
+                      //비번 틀렸으면 0, 성공시 1
+                        if(data==1){
+                            alert("환영합니다");
+                            window.location.href = "/ranking";
+                        }else {
+                            alert("계정 정보가 틀렸습니다.");
+                            return;
+                        }
+                    }
+                    ,error:function(){
+                        alert("오류발생");
+                        return;
+                    }
+                });
             }
         }
         function goFind(){
