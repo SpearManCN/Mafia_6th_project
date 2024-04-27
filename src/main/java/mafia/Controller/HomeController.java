@@ -3,6 +3,7 @@ package mafia.Controller;
 import mafia.Domain.Member;
 import mafia.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private MemberService memberService;
     @RequestMapping("/home")
@@ -31,6 +34,11 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping("/loginError")
+    public String loginError(Model model){
+        model.addAttribute("error", 1);
+        return "login";
+    }
     @RequestMapping("/loginProc")
     @ResponseBody
     public int loginProc(Member member){
@@ -46,6 +54,10 @@ public class HomeController {
     public int joinProc(Member member){
         //member 값 받아와서 중복확인.
         //id 와 nick 중복확인후 id중복시 3, nick중복시 2, 성공적으로 가입시 1
+
+        String encodedPassword = passwordEncoder.encode(member.getPw());
+        System.out.println(encodedPassword);
+        member.setPw(encodedPassword);
         int result = memberService.join(member);
         switch (result){
             case 3 : return result;

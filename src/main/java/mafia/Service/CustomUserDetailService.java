@@ -20,11 +20,11 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         Member member = new Member();
-
+        System.out.println(" 들어온값 " + id);
         member.setId(id);
-        System.out.println("before id : " + member.getId() + " pw : "+member.getPw() );
+        System.out.println("before id : " + member.getId() );
         member = memberRepository.getMemberById(member);
-        System.out.println("id : "+ member+ );
+        //System.out.println("id : "+ member.getId()+ "pw : "+member.getPw() );
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         if(member == null){

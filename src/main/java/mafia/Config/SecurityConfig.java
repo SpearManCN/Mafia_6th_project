@@ -29,6 +29,7 @@ public class SecurityConfig {
 //    }
     @Autowired
     private CustomUserDetailService userDetailsService;
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -43,6 +44,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProc")
+                .failureForwardUrl("/loginError")
                 .defaultSuccessUrl("/ranking")
                 .permitAll();
         http
@@ -56,8 +58,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-        //return new BCryptPasswordEncoder();
+        //return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

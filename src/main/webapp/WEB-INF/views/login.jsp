@@ -36,12 +36,22 @@
     </style>
     <script>
         $(function(){
-            $("#loginBt").click(function(){val()});
+            if( "${error}" == "1"){
+                alert("회원 정보가 잘못됐습니다.");
+            }
+
+            $("#loginBt").click(function(){submitForm()});
             $("#findBt").click(function(){goFind()});
             $("#joinBt").click(function(){goJoin()});
             $("#kakaoBt").click(function(){goKakao()});
             $("#discord").click(function(){goDiscord()});
         });
+        function submitForm() {
+            // Get the form element by its ID
+            var form = document.getElementById("loginForms");
+            // Submit the form
+            form.submit();
+        }
         function goJoin(){
             window.location.href = "/login_join";
         }
@@ -89,12 +99,12 @@
 
 <div id="div1">
     <div id="div2">
-        <form name="loginForm">
+        <form id="loginForms" name="loginForm" action="/loginProc" method="post">
         <div>
-            id <input type="text" placeholder="ID를 입력해주세요" id="inputId" name="id">
+            id <input type="text" placeholder="ID를 입력해주세요" id="inputId" name="username">
         </div>
         <div>
-            pw <input type="password" placeholder="PW를 입력해주세요" id="inputPw" name="pw">
+            pw <input type="password" placeholder="PW를 입력해주세요" id="inputPw" name="password">
         </div>
         </form>
         <div>
