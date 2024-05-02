@@ -27,6 +27,9 @@ public class MemberService {
         }
         return result;
     }
+    public Member getNick ( Member member ){
+        return memberRepository.getMemberById(member);
+    }
 
     public int insertMember(Member member){
         return memberRepository.insertMember(member);

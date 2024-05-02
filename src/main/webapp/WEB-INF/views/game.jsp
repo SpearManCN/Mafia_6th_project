@@ -7,7 +7,17 @@
 </head>
 <body>
 <%@ include file="home.jsp" %>
+<div align="center" width="1000px" height="700px">
+    <div>
+        현재 n명 참여중
+    </div>
+    <div>내 점수 n점
+    </div>
+    <div>n승 n패
+    </div>
 
+    <button>매칭하기</button>
+</div>
 
 </body>
 </html>

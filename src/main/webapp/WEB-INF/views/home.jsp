@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,12 @@
             cursor:pointer;
             font-size:20px;
         }
+        #loginBar2{
+            height:50px;
+            width:100px;
+            font-szie:20px;
+
+        }
         #Mafia{
             display: flex; font-size:40px;
             justify-content: center;
@@ -71,8 +78,13 @@
 </head>
 
 <body>
-<div align="right" style="height:50px;">
+<div align="right">
+<c:if test="${not empty myNick}">
+    <span id ="loginBar2" >${myNick} 님 환영합니다</span>
+</c:if>
+<c:if test="${empty myNick}">
     <span id ="loginBar" >로그인</span>
+</c:if>
 </div>
 <div id="Mafia">
     Mafia Game

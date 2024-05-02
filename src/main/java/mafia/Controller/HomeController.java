@@ -3,9 +3,13 @@ package mafia.Controller;
 import mafia.Domain.Member;
 import mafia.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +21,22 @@ public class HomeController {
     PasswordEncoder passwordEncoder;
     @Autowired
     private MemberService memberService;
+    @ModelAttribute
+    public void addCommonAttributes(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails){
+            UserDetails principal = (UserDetails) authentication.getPrincipal();
+            String id = principal.getUsername();
+            Member member = new Member();
+            member.setId(id);
+            member = memberService.getNick(member);
+            model.addAttribute("myNick", member.getNick());
+        }
+
+
+    }
+
+
     @RequestMapping("/home")
     public String home(){
         return "home";
