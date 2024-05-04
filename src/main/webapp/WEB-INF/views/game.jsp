@@ -11,7 +11,7 @@
     <div>
         현재 n명 참여중
     </div>
-    <div>내 점수 n점
+    <div>내 점수  n 점
     </div>
     <div>n승 n패
     </div>
