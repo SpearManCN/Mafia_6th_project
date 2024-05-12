@@ -28,6 +28,7 @@ public class WebSocketController {
     @Autowired
     private SimpMessagingTemplate messageTemplate;
 //    WebSocketSession session;
+    int roleNo = 0;
     int totUserNo = 0;
     int totRoomNo = 0;
     Set<String> waiting = new HashSet<>();
@@ -78,13 +79,19 @@ public class WebSocketController {
         totRoomNo++;
     }
     public void gameStart(int roomNo){
-        for(int i = 0; i < 4 ; i ++ ){
+        int tmp = roleNo;
+        roleNo++;
+        Message message = new Message();
+        message.setType("START");
+        message.setRoomNo(roomNo);
+        for(int i = 0; i < 1 ; i ++ ){
+            tmp = (tmp+i)%4;
+            message.setRole(tmp);
+            // 0-시민 1-의사 2-시민 3-마피아
             List members = rooms.get(totRoomNo);
-
             String val = (String)members.get(i);
+            messageTemplate.convertAndSend("/topic/public/"+val, message);
         }
-        messageTemplate.convertAndSend("/topic/public/"+brokerDTO.getMemberName(), chatMessage);
-
         return;
     }
 
