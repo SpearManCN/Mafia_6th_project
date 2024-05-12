@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,26 +8,36 @@
 </head>
 <script src="/js/sockjs.min.js"></script>
 <script src="/js/stomp.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stompjs@2/dist/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
     var stompClient = null;
-
+    var myNick = "${myNick}";
     function connect() {
-        if(confirm("Are you sure you want to start a new chat?")==false){return;}
-        alert("12344t");
+        alert(myNick);
+        if(confirm("게임 대기열에 등록하시겠습니까?")==false){return;}
+
         var socket = new WebSocket('ws://' + window.location.host + '/chat');
-        alert("prkf");
-        $("[name=totUserSpan]").text( "wind.location.host : "+window.location.host);
-        alert("f");
+        disconnect();
+        $("[name=test]").text( "wind.location.host : "+window.location.host);
         stompClient = Stomp.over(socket);
-        alert("over");
         stompClient.connect({}, function () {
+                stompClient.subscribe('/topic/public/'+myNick, function (Message) {
+                    alert(JSON.parse(Message.body).message);
+                    // $("[name=brokerName]").val(JSON.parse(Message.body).brokerName);
+                    // $("[name=memberName]").val(JSON.parse(chatMessage.body).receiver);
+                    // showChatMessage(JSON.parse(chatMessage.body));
+                });
+            stompClient.send("/app/chat/regist/"+myNick, {}, JSON.stringify({sender:myNick, content:"", type: 'SYSTEM' }));
+
             alert( "connected");
         });
-        alert("after");
+    }
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
     }
         //     stompClient.subscribe('/topic/public/'+sessionId, function (chatMessage) {
         //         $("[name=brokerName]").val(JSON.parse(chatMessage.body).brokerName);
@@ -37,20 +48,16 @@
 
 
     function updateTotUser() {
-        alert("1233323");
         $.ajax({
             url: '/updateUserNo',  // 서버에서 유저 목록을 반환하는 엔드포인트
             success: function(no) {
-                alert("123123");
                 $("[name=totUserSpan]").text( "현재 접속 인원 : "+no);
-                // $("[name=totUserSpan]").text( "Now Users : " +no);
             },
             error:function(){
-                alert("error");
             }
         });
     }
-    // setInterval(alert("555"), 1000);
+    setInterval(updateTotUser, 1000);
 </script>
 <body>
 <%@ include file="home.jsp" %>

@@ -12,7 +12,7 @@ public class Message {
 
 enum MessageType{
     CHAT,
-    GAME
+    SYSTEM
 
 }
 

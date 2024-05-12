@@ -1,6 +1,7 @@
 package mafia.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -20,7 +21,7 @@ public class MyHandshakeInterceptor implements HandshakeInterceptor {
             // HttpSession에서 sessionId를 가져와서 WebSocket 세션의 attribute에 저장
             String sessionId = httpSession.getId();
             attributes.put("sessionId", sessionId);
-
+            System.out.println("beforeHandshake sessionId = "+sessionId);
             // 다른 필요한 정보도 필요하다면 attribute에 저장할 수 있음
             // attributes.put("customKey", "customValue");
         }

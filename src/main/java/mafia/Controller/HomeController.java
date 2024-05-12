@@ -1,5 +1,6 @@
 package mafia.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import mafia.Domain.Member;
 import mafia.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class HomeController {
     @Autowired
     private MemberService memberService;
     @ModelAttribute
-    public void addCommonAttributes(Model model) {
+    public void addCommonAttributes(Model model, HttpSession session) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails){
             UserDetails principal = (UserDetails) authentication.getPrincipal();
@@ -31,6 +32,7 @@ public class HomeController {
             member.setId(id);
             member = memberService.getNick(member);
             model.addAttribute("myNick", member.getNick());
+            session.setAttribute("sessionNick", member.getNick());
         }
 
 
