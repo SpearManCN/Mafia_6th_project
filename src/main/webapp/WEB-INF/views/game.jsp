@@ -148,6 +148,6 @@
 
 
 
-<%--<button onclick="updateTotUser()">유저수</button>--%>
+<%--<button onclick="u pdateTotUser()">유저수</button>--%>
 </body>
 </html>
