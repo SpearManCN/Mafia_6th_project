@@ -25,6 +25,7 @@
     var myNick = "${myNick}";
     var myRole = "";
     var roomNo;
+    var userArr = [];
     $(function(){
         $("[name=exit]").hide();
         $("[name=chatDiv]").hide();
@@ -108,20 +109,31 @@
         userList(Message);
         $('#messages').append('<li>      낮이 되었습니다. 30초 후 투표를 진행합니다.</li>');
         var count = 30;
-
-        // 1초마다 실행되는 함수
         var countdown = setInterval(function() {
             // count 값을 1씩 감소
             count--;
-            document.querySelector('[name=time]').innerText = count;
+            document.querySelector('[name=time]').innerText = "지금은 낮입니다. 남은 시간은 "+count + "초 입니다";
+
 
             // count 값이 0이 되면 타이머 정지
-            if (count <= 0) {
+            if (count <= 28) {
+                vote4();
                 clearInterval(countdown);
             }
+
         }, 1000);
         // alert("잘돌아가고있음");
     }
+
+    function vote4(){
+        $("[name=chatDiv]").hide();
+        $("[name=voteList]")
+            .html("<input type='button' value='"+userArr[0]+"'>"
+                +"<input type='button' value='"+userArr[1]+"'>"
+                +"<input type='button' value='"+userArr[2]+"'>"
+            );
+    }
+
 
     function chat(){
 
@@ -173,6 +185,11 @@
 
     function userList(Message){
         var members = JSON.parse(Message.body).members;
+        for(let i=0; i<4; i++){
+            if(members[i] != myNick){
+                userArr.push(members[i]);
+            }
+        }
         $("[name=userList]").text("참여자 : " + members[0]+ ", " + members[1]+  ", " +members[2] +  ", " +members[3])
     }
     var time = 0;
@@ -189,7 +206,6 @@
 <div align="center">
     <span name="userList"></span>
 </div>
-
 <div name="gameDiv" align="center" width="1000px" height="700px">
     <div>
         <span name="totUserSpan"> </span>
@@ -213,6 +229,8 @@
         <input style="width:350px; height:25px;" type="text" id="messageInput" placeholder="Type a message..." />
         <button style="width:50px; height:28px;" type="submit" >Send</button>
     </form>
+</div>
+<div name="voteList" align="center">
 </div>
 <div align="center">
     <button name="findGame" onclick="connect()">매칭하기</button>
