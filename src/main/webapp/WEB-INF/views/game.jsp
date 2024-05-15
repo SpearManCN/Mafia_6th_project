@@ -24,10 +24,24 @@
     var stompClient = null;
     var myNick = "${myNick}";
     var myRole = "";
+    var roomNo;
     $(function(){
         $("[name=exit]").hide();
         $("[name=chatDiv]").hide();
+        $('#messageForm').on('submit', function (e) {
+            e.preventDefault();
+            sendMessage();
+        });
     });
+
+    function sendMessage() {
+        // brokerName = $("[name=brokerName]").val();
+        // memberName = $("[name=memberName]").val();
+        var messageInput = $('#messageInput').val();
+        // alert(roomNo);
+        stompClient.send("/app/chat/sendMessage/"+roomNo, {}, JSON.stringify({from:myNick, message: messageInput, type: 'CHAT' }));
+        $('#messageInput').val('');
+    }
 
     function connect() {
         // alert(myNick);
@@ -60,6 +74,22 @@
 
     function gameStart(Message){
         var roleNo = JSON.parse(Message.body).role;
+        roomNo = JSON.parse(Message.body).roomNo;
+        stompClient.subscribe('/topic/public/'+roomNo, function (Message2) {
+            // alert(JSON.parse(Message2.body).type);
+            showChatMessage(Message2);
+            // if(JSON.parse(Message.body).type == "START"){
+            //     gameStart(Message);
+            // }else if(JSON.parse(Message.body).type == "CHAT"){
+            //     showChatMessage(Message);
+            // }else if(JSON.parse(Message.body).type == "GAME"){
+            //     game(Message);
+            // }
+            // alert(JSON.parse(Message.body).type + JSON.parse(Message.body).role);
+            // $("[name=brokerName]").val(JSON.parse(Message.body).brokerName);
+            // $("[name=memberName]").val(JSON.parse(chatMessage.body).receiver);
+            // showChatMessage(JSON.parse(chatMessage.body));
+        });
         // 0-시민 1-의사 2-시민 3-마피아
         if (roleNo==1 ){
             myRole = "의사";
@@ -75,7 +105,22 @@
         sleep(1500).then(() => {
             $('div[name="gameDiv"]').empty().append('<div> 당신의 직업은 '+myRole+ ' 입니다. </div>');
         });
+        userList(Message);
+        $('#messages').append('<li>      낮이 되었습니다. 30초 후 투표를 진행합니다.</li>');
+        var count = 30;
 
+        // 1초마다 실행되는 함수
+        var countdown = setInterval(function() {
+            // count 값을 1씩 감소
+            count--;
+            document.querySelector('[name=time]').innerText = count;
+
+            // count 값이 0이 되면 타이머 정지
+            if (count <= 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+        // alert("잘돌아가고있음");
     }
 
     function chat(){
@@ -84,8 +129,18 @@
     function game(){
 
     }
+    var chatDiv = document.getElementById('chat');
+    function scrollToBottom() {
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+    function showChatMessage(Message) {
+        var sender = JSON.parse(Message.body).from;
+        var content = JSON.parse(Message.body).message;
+        // alert(sender+content);
+        $('#messages').append('<li>'+sender+ ' : ' + content + '</li>');
 
-
+        scrollToBottom();
+    }
     function disconnect() {
         if (stompClient !== null) {
             stompClient.disconnect();
@@ -115,10 +170,26 @@
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    function userList(Message){
+        var members = JSON.parse(Message.body).members;
+        $("[name=userList]").text("참여자 : " + members[0]+ ", " + members[1]+  ", " +members[2] +  ", " +members[3])
+    }
+    var time = 0;
+    function time(){
+        timeNo = 30;
+        $("[name=time]").text("지금은 낮 입니다. 남은 시간 : "+timeNo+"초");
+        timeNo--;
+    }
+
     setInterval(updateTotUser, 1000);
 </script>
 <body>
 <%@ include file="home.jsp" %>
+<div align="center">
+    <span name="userList"></span>
+</div>
+
 <div name="gameDiv" align="center" width="1000px" height="700px">
     <div>
         <span name="totUserSpan"> </span>
@@ -129,6 +200,9 @@
     </div>
     <div>n승 n패
     </div>
+</div>
+<div align="center">
+    <span name="time"></span>
 </div>
 <div name="chatDiv" align="center">
     <div class="chat" id="chat">

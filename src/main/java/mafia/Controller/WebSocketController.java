@@ -39,27 +39,23 @@ public class WebSocketController {
         return totUserNo;
     }
 
-//    @MessageMapping("/chat/regist/{nick}")
-//    @SendTo("/topic/public/{brokerName}")
-//    public Message sendMessage(@DestinationVariable(value="brokerName") String brokerName, @Payload Message message) {
-//        if(chatMessage.getType()==MessageType.JOIN){
-//            BrokerDTO brokerDTO = findRoom(chatMessage.getSender());
-//            if(brokerDTO.getMemberName()==null){ //방을 만든 사람이라면
-//                chatMessage.setBrokerName(brokerDTO.getBrokerName()); // 방이름을 넣어줌
-//            }else{  //이미 있는 방에 들어간 사람이라면
-//                chatMessage.setBrokerName(brokerDTO.getBrokerName()); // 방이름과
-//                chatMessage.setReceiver(brokerDTO.getMemberName());   // 방에 원래있는사람의 이름을 넣어줌
-//                messageTemplate.convertAndSend("/topic/public/"+brokerDTO.getMemberName(), chatMessage);
-//            }
-//        }
-//        return chatMessage;
-//    }
+    @MessageMapping("/chat/sendMessage/{nowRoomNo}")
+//    @SendTo("/topic/public/{nowRoomNo}")
+    public void sendMessage(@DestinationVariable(value="nowRoomNo") String nowRoomNo, @Payload Message message) {
+        System.out.println("sendMEssage nowRoomNo = "+nowRoomNo);
+        System.out.println("message sender = "+message.getFrom());
+        System.out.println("message type = "+message.getType());
+        if(message.getType().equals("CHAT")){
+            messageTemplate.convertAndSend("/topic/public/"+nowRoomNo, message);
+        }
+        return;
+    }
 
     @MessageMapping("/chat/regist/{nick}")
     public void regist(@DestinationVariable(value="nick") String nick){
         waiting.add(nick);
         System.out.println(nick);
-        if(waiting.size()==1){
+        if(waiting.size()==2){
             makeRoom();
         }
     }
@@ -80,11 +76,14 @@ public class WebSocketController {
     }
     public void gameStart(int roomNo){
         int tmp = roleNo;
+        List<String> memList = rooms.get(roomNo);
+        System.out.println("list : "+memList.toString());
         roleNo++;
         Message message = new Message();
         message.setType("START");
         message.setRoomNo(roomNo);
-        for(int i = 0; i < 1 ; i ++ ){
+        message.setMembers(memList);
+        for(int i = 0; i < 2 ; i ++ ){
             tmp = (tmp+i)%4;
             message.setRole(tmp);
             // 0-시민 1-의사 2-시민 3-마피아
@@ -92,6 +91,12 @@ public class WebSocketController {
             String val = (String)members.get(i);
             messageTemplate.convertAndSend("/topic/public/"+val, message);
         }
+        message.setType("CHAT");
+        message.setTo("");
+        message.setFrom("**GAME SYSTEM**");
+        message.setMessage("게임이 시작됐습니다. 30초 후 투표가 시작됩니다.");
+        messageTemplate.convertAndSend("/topic/public/"+roomNo, message);
+        System.out.println(message.getMessage());
         return;
     }
 
@@ -99,6 +104,8 @@ public class WebSocketController {
     public void test(){
         System.out.println("test succeed");
     }
+
+
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
