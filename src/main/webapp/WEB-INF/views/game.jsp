@@ -128,20 +128,16 @@
     function vote4(){
         $("[name=chatDiv]").hide();
         $("[name=voteList]")
-            .html("<input type='button' onclick="+userArr[0]+" value='"+userArr[0]+"'>"
-                +"<input type='button' onclick="+userArr[1]+" value='"+userArr[1]+"'>"
-                +"<input type='button' onclick="+userArr[2]+" value='"+userArr[2]+"'>"
+            .html("<input type='button' onclick='sendVote("+userArr[0]+")' value='"+userArr[0]+"'>"
+                +"<input type='button' onclick='sendVote("+userArr[1]+")' value='"+userArr[1]+"'>"
+                +"<input type='button' onclick='sendVote("+userArr[2]+")' value='"+userArr[2]+"'>"
             );
     }
     function sendVote(val){
-        $.ajax({
-            url: '/updateUserNo',  // 서버에서 유저 목록을 반환하는 엔드포인트
-            success: function(no) {
-                $("[name=totUserSpan]").text( "현재 접속 인원 : "+no);
-            },
-            error:function(){
-            }
-        });
+        var messageInput = $('#messageInput').val();
+        // alert(roomNo);
+        stompClient.send("/app/chat/sendMessage/"+roomNo, {}, JSON.stringify({from:myNick, message: messageInput, type: 'VOTE' }));
+        $('#messageInput').val('');
     }
 
     function chat(){
