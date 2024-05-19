@@ -39,14 +39,11 @@ public class WebSocketController {
         return totUserNo;
     }
 
-//    @MessageMapping("/chat/vote1/{roomNo}")
-//    public void vote1(@DestinationVariable(value="roomNo") String roomNo, @Payload Message message){
-//        waiting.add(nick);
-//        System.out.println(nick);
-//        if(waiting.size()==2){
-//            makeRoom();
-//        }
-//    }
+    @MessageMapping("/chat/vote1/{nowRoomNo}")
+    public void vote1(@DestinationVariable (value="roomNo") String nowRoomNo, @Payload Message message){
+        message.setType("VOTE1");
+        messageTemplate.convertAndSend("/topic/public/"+nowRoomNo, message);
+    }
     @MessageMapping("/chat/sendMessage/{nowRoomNo}")
 //    @SendTo("/topic/public/{nowRoomNo}")
     public void sendMessage(@DestinationVariable(value="nowRoomNo") String nowRoomNo, @Payload Message message) {

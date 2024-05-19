@@ -26,6 +26,7 @@
     var myRole = "";
     var roomNo;
     var userArr = [];
+    var voteArr = [0, 0, 0, 0];
     $(function(){
         $("[name=exit]").hide();
         $("[name=chatDiv]").hide();
@@ -133,13 +134,26 @@
                 +"<input type='button' onclick='sendVote("+userArr[2]+")' value='"+userArr[2]+"'>"
             );
     }
+
     function sendVote(val){
-        var messageInput = $('#messageInput').val();
+        // var messageInput = $('#messageInput').val();
         // alert(roomNo);
-        stompClient.send("/app/chat/sendMessage/"+roomNo, {}, JSON.stringify({from:myNick, message: messageInput, type: 'VOTE' }));
+        stompClient.send("/app/chat/vote/"+roomNo, {}, JSON.stringify({from:myNick, message: messageInput, type: 'VOTE' }));
         $('#messageInput').val('');
     }
+    var voteNo = 0;
+    function vote1Result(message){
+        voteNo++;
+        for( var i = 0; i <4 ; i++){
+            if ( JSON.parse(Message.body).message == userArr[i]){
+                voteArr[i]++;
+            }
+        }
 
+        if ( voteNo == 4 ){
+            
+        }
+    }
     function chat(){
 
     }
@@ -151,6 +165,11 @@
         chatDiv.scrollTop = chatDiv.scrollHeight;
     }
     function showChatMessage(Message) {
+        if(JSON.parse(Message.body).type == "VOTE1"){
+            vote1Result(Message);
+            return;
+        }
+
         var sender = JSON.parse(Message.body).from;
         var content = JSON.parse(Message.body).message;
         // alert(sender+content);
