@@ -32,7 +32,9 @@ public class WebSocketController {
     int totUserNo = 0;
     int totRoomNo = 0;
     Set<String> waiting = new HashSet<>();
-    Map<Integer,List<String>> rooms = new ConcurrentHashMap<Integer, List<String>>();
+
+    Map<Integer, List<String>> rooms = new ConcurrentHashMap<Integer, List<String>>();
+//    Map<Integer, List<String>>
     @RequestMapping("/updateUserNo")
     @ResponseBody
     public int updateUserNo(){

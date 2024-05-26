@@ -149,11 +149,36 @@
                 voteArr[i]++;
             }
         }
-
         if ( voteNo == 4 ){
-            
+            if(voteArr[0]==voteArr[1] && voteArr[2]==voteArr[3] && voteArr[1]== voteArr[2]) {
+                vote1End(2,"");
+            }
+            for(var i = 0; i <4 ; i++){
+                if( voteArr[i] == 3){
+                    vote1End(1,userArr[i]);
+                }
+            }
+            for(var i = 0; i <4 ; i++){
+                var tmpNo = 0;
+                var tmpVal = "";
+                if( voteArr[i] == 2){
+                    tmpVal = voteArr[i];
+                    tmpNo++;
+                }
+                if(tmpNo == 2){
+
+                    vote1End(2,"");
+                }else{
+                    vote1End(1,tmpVal);
+                }
+
+            }
         }
     }
+    function vote1End(){
+
+    }
+
     function chat(){
 
     }
